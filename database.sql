@@ -4,7 +4,8 @@
 --  Import via phpMyAdmin : Import tab → choose this file → Go
 --  Import via terminal   : mysql -u root -p < cps.sql
 -- =============================================================
-
+CREATE DATABASE cps;
+USE cps;
 -- -------------------------------------------------------------
 --  2. Tables
 -- -------------------------------------------------------------
