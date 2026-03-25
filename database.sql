@@ -6,8 +6,9 @@
 -- =============================================================
 CREATE DATABASE cps;
 USE cps;
+
 -- -------------------------------------------------------------
---  2. Tables
+--  Tables
 -- -------------------------------------------------------------
 
 -- users : admin accounts for system login
@@ -31,23 +32,28 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- students : enrolled student profiles
 -- -------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `students` (
-    `id`                INT UNSIGNED  NOT NULL AUTO_INCREMENT,
-    `student_id`        VARCHAR(50)   NOT NULL,
-    `first_name`        VARCHAR(100)  NOT NULL,
-    `last_name`         VARCHAR(100)  NOT NULL,
-    `email`             VARCHAR(150)      NULL,
-    `phone`             VARCHAR(30)       NULL,
-    `date_of_birth`     DATE              NULL,
-    `gender`            VARCHAR(20)       NULL,
-    `address`           TEXT              NULL,
-    `year_level`        VARCHAR(50)       NULL,
-    `course`            VARCHAR(150)      NULL,
-    `section`           VARCHAR(50)       NULL,
-    `enrollment_status` VARCHAR(50)   NOT NULL DEFAULT 'Active',
-    `gpa`               DECIMAL(4, 2) NOT NULL DEFAULT 0.00,
-    `emergency_contact` VARCHAR(150)      NULL,
-    `emergency_phone`   VARCHAR(30)       NULL,
-    `created_at`        DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `id`                      INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `student_id`              VARCHAR(50)   NOT NULL,
+    `first_name`              VARCHAR(100)  NOT NULL,
+    `last_name`               VARCHAR(100)  NOT NULL,
+    `email`                   VARCHAR(150)      NULL,
+    `phone`                   VARCHAR(30)       NULL,
+    `date_of_birth`           DATE              NULL,
+    `gender`                  VARCHAR(20)       NULL,
+    `address`                 TEXT              NULL,
+    `year_level`              VARCHAR(50)       NULL,
+    `course`                  VARCHAR(150)      NULL,
+    `section`                 VARCHAR(50)       NULL,
+    `enrollment_status`       VARCHAR(50)   NOT NULL DEFAULT 'Active',
+    `gpa`                     DECIMAL(4, 2) NOT NULL DEFAULT 0.00,
+    `emergency_contact`       VARCHAR(150)      NULL,
+    `emergency_phone`         VARCHAR(30)       NULL,
+    `skills`                  TEXT              NULL,
+    `non_academic_activities` TEXT              NULL,
+    `affiliations`            TEXT              NULL,
+    `violations`              TEXT              NULL,
+    `academic_history`        TEXT              NULL,
+    `created_at`              DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     PRIMARY KEY (`id`),
     UNIQUE KEY `uq_students_student_id` (`student_id`)
@@ -223,60 +229,125 @@ CREATE TABLE IF NOT EXISTS `lessons` (
 
 
 -- =============================================================
---  Sample data (optional)
+--  Sample Data
 -- =============================================================
 
 -- Students
+-- -------------------------------------------------------------
 INSERT INTO `students`
     (`student_id`, `first_name`, `last_name`, `email`, `phone`, `date_of_birth`,
-     `gender`, `address`, `year_level`, `course`, `section`,
-     `enrollment_status`, `gpa`, `emergency_contact`, `emergency_phone`)
+     `gender`, `address`, `year_level`, `course`, `section`, `enrollment_status`,
+     `gpa`, `emergency_contact`, `emergency_phone`,
+     `skills`, `non_academic_activities`, `affiliations`, `violations`, `academic_history`)
 VALUES
-    ('STU-2024-001', 'Maria',  'Santos',  'maria.santos@edu.ph',  '09171234567', '2004-03-15', 'Female', '123 Rizal St, Laguna',       '3rd Year', 'BS Computer Science',     'CS3A',  'Active', 1.75, 'Juan Santos',   '09170000001'),
-    ('STU-2024-002', 'Jose',   'Reyes',   'jose.reyes@edu.ph',    '09281234567', '2003-07-22', 'Male',   '456 Mabini Ave, Cavite',     '4th Year', 'BS Information Technology','IT4B',  'Active', 1.50, 'Rosa Reyes',    '09280000002'),
-    ('STU-2024-003', 'Ana',    'Cruz',    'ana.cruz@edu.ph',      '09391234567', '2005-01-10', 'Female', '789 Bonifacio Rd, Batangas', '2nd Year', 'BS Education',            'ED2C',  'Active', 2.00, 'Pedro Cruz',    '09390000003'),
-    ('STU-2024-004', 'Pedro',  'Garcia',  'pedro.garcia@edu.ph',  '09501234567', '2004-11-05', 'Male',   '321 Luna St, Quezon',        '3rd Year', 'BS Business Admin',       'BA3A',  'Active', 1.85, 'Elena Garcia',  '09500000004'),
-    ('STU-2024-005', 'Liza',   'Mendoza', 'liza.mendoza@edu.ph',  '09611234567', '2003-09-18', 'Female', '654 Del Pilar, Laguna',      '4th Year', 'BS Nursing',              'NUR4A', 'Active', 1.25, 'Mario Mendoza', '09610000005');
+    ('STU-2024-001', 'Maria', 'Santos', 'maria.santos@edu.ph', '09171234567', '2004-03-15',
+     'Female', '123 Rizal St, Laguna', '3rd Year', 'BS Computer Science', 'CS3A', 'Active',
+     1.75, 'Juan Santos', '09170000001',
+     'Programming, Python, Data Analysis',
+     'Science Club Member (2022–present), Hackathon Participant',
+     'Junior Philippine Computer Society (Secretary), Robotics Club',
+     NULL,
+     'Dean''s List — AY 2023-2024'),
+
+    ('STU-2024-002', 'Jose', 'Reyes', 'jose.reyes@edu.ph', '09281234567', '2003-07-22',
+     'Male', '456 Mabini Ave, Cavite', '4th Year', 'BS Information Technology', 'IT4B', 'Active',
+     1.50, 'Rosa Reyes', '09280000002',
+     'Web Development, JavaScript, Networking',
+     'Varsity Basketball Player (2021–present), Campus DJ',
+     'University Basketball Team, IT Students Society (President)',
+     NULL,
+     'Cum Laude candidate, Dean''s List x3'),
+
+    ('STU-2024-003', 'Ana', 'Cruz', 'ana.cruz@edu.ph', '09391234567', '2005-01-10',
+     'Female', '789 Bonifacio Rd, Batangas', '2nd Year', 'BS Education', 'ED2C', 'Active',
+     2.00, 'Pedro Cruz', '09390000003',
+     'Teaching, Public Speaking, Lesson Planning',
+     'Peer Tutor, Theater Arts',
+     'Philippine Normal Students Organization, Campus Theater Guild',
+     NULL,
+     'Honor Roll — AY 2022, Best in Practice Teaching Award'),
+
+    ('STU-2024-004', 'Pedro', 'Garcia', 'pedro.garcia@edu.ph', '09501234567', '2004-11-05',
+     'Male', '321 Luna St, Quezon', '3rd Year', 'BS Business Admin', 'BA3A', 'Active',
+     1.85, 'Elena Garcia', '09500000004',
+     'Business Planning, Marketing, Leadership',
+     'Junior Entrepreneurs Club, Community Outreach',
+     'Junior Philippine Institute of Accountants, Entrepreneurship Society',
+     '2024-02-15 — Minor: Late submission of business plan. Verbal warning issued.',
+     'Business Case Competition — 2nd Place 2023'),
+
+    ('STU-2024-005', 'Liza', 'Mendoza', 'liza.mendoza@edu.ph', '09611234567', '2003-09-18',
+     'Female', '654 Del Pilar, Laguna', '4th Year', 'BS Nursing', 'NUR4A', 'Active',
+     1.25, 'Mario Mendoza', '09610000005',
+     'Patient Care, First Aid, Medical Terminology',
+     'Red Cross Youth Volunteer, Hospital Immersion Program',
+     'Philippine Nursing Students Association, Red Cross Youth Chapter',
+     NULL,
+     'Top 1 — Nursing Board Exam Review Class 2024, Dean''s List x4');
 
 
 -- Faculty
+-- -------------------------------------------------------------
 INSERT INTO `faculty`
     (`faculty_id`, `first_name`, `last_name`, `email`, `phone`, `date_of_birth`,
      `gender`, `address`, `department`, `position`, `specialization`,
      `employment_type`, `hire_date`, `bio`)
 VALUES
-    ('FAC-001', 'Ramon', 'Villanueva', 'ramon.villanueva@edu.ph', '09171111111', '1975-06-20', 'Male',   'Makati City',   'College of Computing', 'Dean / Professor',    'Artificial Intelligence',  'Full-Time', '2010-06-01', 'Expert in AI and Machine Learning with 15+ years in academia.'),
-    ('FAC-002', 'Elena', 'Flores',     'elena.flores@edu.ph',     '09172222222', '1980-03-14', 'Female', 'Pasig City',    'College of Education', 'Associate Professor', 'Curriculum Development',   'Full-Time', '2015-08-15', 'Specialist in curriculum design and educational technology.'),
-    ('FAC-003', 'Marco', 'Dela Cruz',  'marco.delacruz@edu.ph',   '09173333333', '1978-11-30', 'Male',   'Quezon City',   'College of Business',  'Professor',           'Management & Finance',     'Full-Time', '2008-01-10', 'Business management expert with extensive industry experience.'),
-    ('FAC-004', 'Sarah', 'Aquino',     'sarah.aquino@edu.ph',     '09174444444', '1985-07-09', 'Female', 'Caloocan City', 'College of Nursing',   'Assistant Professor', 'Medical Surgical Nursing', 'Full-Time', '2018-06-01', 'Registered nurse and educator with clinical and teaching experience.');
+    ('FAC-001', 'Ramon', 'Villanueva', 'ramon.villanueva@edu.ph', '09171111111', '1975-06-20',
+     'Male', 'Makati City', 'College of Computing', 'Dean / Professor', 'Artificial Intelligence',
+     'Full-Time', '2010-06-01', 'Expert in AI and Machine Learning with 15+ years in academia.'),
+
+    ('FAC-002', 'Elena', 'Flores', 'elena.flores@edu.ph', '09172222222', '1980-03-14',
+     'Female', 'Pasig City', 'College of Education', 'Associate Professor', 'Curriculum Development',
+     'Full-Time', '2015-08-15', 'Specialist in curriculum design and educational technology.'),
+
+    ('FAC-003', 'Marco', 'Dela Cruz', 'marco.delacruz@edu.ph', '09173333333', '1978-11-30',
+     'Male', 'Quezon City', 'College of Business', 'Professor', 'Management & Finance',
+     'Full-Time', '2008-01-10', 'Business management expert with extensive industry experience.'),
+
+    ('FAC-004', 'Sarah', 'Aquino', 'sarah.aquino@edu.ph', '09174444444', '1985-07-09',
+     'Female', 'Caloocan City', 'College of Nursing', 'Assistant Professor', 'Medical Surgical Nursing',
+     'Full-Time', '2018-06-01', 'Registered nurse and educator with clinical and teaching experience.');
 
 
 -- Events
+-- -------------------------------------------------------------
 INSERT INTO `events`
     (`title`, `description`, `event_date`, `event_time`, `end_time`,
      `location`, `category`, `status`, `organizer`, `max_participants`)
 VALUES
-    ('Enrollment Period - 2nd Semester', 'Official enrollment for the second semester AY 2024-2025',        '2025-01-06', '08:00:00', '17:00:00', 'Registrar Office', 'Academic',      'Upcoming', 'Registrar Office', 500),
-    ('Foundation Day Celebration',       'Annual foundation day with cultural presentations and activities', '2025-02-14', '09:00:00', '18:00:00', 'Main Gymnasium',   'Special Event', 'Upcoming', 'Student Affairs',  1000),
-    ('Research Colloquium 2025',         'Annual research presentation and awarding ceremony',               '2025-03-20', '08:00:00', '17:00:00', 'Audio Visual Room','Academic',      'Upcoming', 'Research Office',  200),
-    ('Intramurals 2025',                 'Annual inter-department sports competition',                       '2025-04-07', '07:00:00', '18:00:00', 'Campus Grounds',   'Sports',        'Upcoming', 'PE Department',    800),
-    ('Graduation Ceremony',              'Commencement exercises for AY 2024-2025',                          '2025-05-25', '08:00:00', '12:00:00', 'Main Gymnasium',   'Academic',      'Upcoming', 'Academic Affairs', 1500);
+    ('Enrollment Period - 2nd Semester', 'Official enrollment for the second semester AY 2024-2025',
+     '2025-01-06', '08:00:00', '17:00:00', 'Registrar Office', 'Academic', 'Upcoming', 'Registrar Office', 500),
+
+    ('Foundation Day Celebration', 'Annual foundation day with cultural presentations and activities',
+     '2025-02-14', '09:00:00', '18:00:00', 'Main Gymnasium', 'Special Event', 'Upcoming', 'Student Affairs', 1000),
+
+    ('Research Colloquium 2025', 'Annual research presentation and awarding ceremony',
+     '2025-03-20', '08:00:00', '17:00:00', 'Audio Visual Room', 'Academic', 'Upcoming', 'Research Office', 200),
+
+    ('Intramurals 2025', 'Annual inter-department sports competition',
+     '2025-04-07', '07:00:00', '18:00:00', 'Campus Grounds', 'Sports', 'Upcoming', 'PE Department', 800),
+
+    ('Graduation Ceremony', 'Commencement exercises for AY 2024-2025',
+     '2025-05-25', '08:00:00', '12:00:00', 'Main Gymnasium', 'Academic', 'Upcoming', 'Academic Affairs', 1500);
 
 
 -- Schedules
+-- -------------------------------------------------------------
 INSERT INTO `schedules`
     (`subject_code`, `subject_name`, `faculty_id`, `day_of_week`,
      `start_time`, `end_time`, `room`, `course`, `year_level`,
      `section`, `semester`, `school_year`)
 VALUES
-    ('CS301',  'Data Structures & Algorithms', 1, 'Monday',    '07:30:00', '09:00:00', 'Room 301',    'BS Computer Science',      '3rd Year', 'CS3A',  '1st Semester', '2024-2025'),
-    ('CS302',  'Operating Systems',            1, 'Tuesday',   '09:00:00', '10:30:00', 'Lab 201',     'BS Computer Science',      '3rd Year', 'CS3A',  '1st Semester', '2024-2025'),
-    ('IT401',  'Web Development',              2, 'Wednesday', '10:30:00', '12:00:00', 'Lab 301',     'BS Information Technology','4th Year', 'IT4B',  '1st Semester', '2024-2025'),
-    ('ED201',  'Curriculum Theory',            2, 'Thursday',  '13:00:00', '14:30:00', 'Room 105',    'BS Education',             '2nd Year', 'ED2C',  '1st Semester', '2024-2025'),
-    ('NUR401', 'Medical Surgical Nursing',     4, 'Friday',    '07:00:00', '10:00:00', 'Clinical Lab','BS Nursing',               '4th Year', 'NUR4A', '1st Semester', '2024-2025');
+    ('CS301',  'Data Structures & Algorithms', 1, 'Monday',    '07:30:00', '09:00:00', 'Room 301',     'BS Computer Science',       '3rd Year', 'CS3A',  '1st Semester', '2024-2025'),
+    ('CS302',  'Operating Systems',            1, 'Tuesday',   '09:00:00', '10:30:00', 'Lab 201',      'BS Computer Science',       '3rd Year', 'CS3A',  '1st Semester', '2024-2025'),
+    ('IT401',  'Web Development',              2, 'Wednesday', '10:30:00', '12:00:00', 'Lab 301',      'BS Information Technology', '4th Year', 'IT4B',  '1st Semester', '2024-2025'),
+    ('ED201',  'Curriculum Theory',            2, 'Thursday',  '13:00:00', '14:30:00', 'Room 105',     'BS Education',              '2nd Year', 'ED2C',  '1st Semester', '2024-2025'),
+    ('NUR401', 'Medical Surgical Nursing',     4, 'Friday',    '07:00:00', '10:00:00', 'Clinical Lab', 'BS Nursing',                '4th Year', 'NUR4A', '1st Semester', '2024-2025');
 
 
 -- College Research
+-- -------------------------------------------------------------
 INSERT INTO `college_research`
     (`title`, `author`, `adviser`, `abstract`, `keywords`,
      `research_type`, `department`, `year_published`, `status`)
@@ -301,36 +372,47 @@ VALUES
 
 
 -- Syllabus
+-- -------------------------------------------------------------
 INSERT INTO `syllabus`
     (`subject_code`, `subject_name`, `department`, `course`, `year_level`,
      `semester`, `units`, `description`, `objectives`, `grading_system`, `faculty_id`)
 VALUES
-    ('CS301', 'Data Structures & Algorithms', 'College of Computing', 'BS Computer Science',      '3rd Year', '1st Semester', 3,
+    ('CS301', 'Data Structures & Algorithms', 'College of Computing', 'BS Computer Science', '3rd Year', '1st Semester', 3,
      'Study of fundamental data structures and algorithms for efficient problem solving.',
      '1. Implement basic data structures\n2. Analyze algorithm complexity\n3. Apply sorting and searching algorithms',
      'Midterm 40%, Finals 40%, Activities 20%', 1),
 
-    ('IT401', 'Web Development',              'College of Computing', 'BS Information Technology','4th Year', '1st Semester', 3,
+    ('IT401', 'Web Development', 'College of Computing', 'BS Information Technology', '4th Year', '1st Semester', 3,
      'Comprehensive study of modern web development technologies and frameworks.',
      '1. Build responsive web apps\n2. Implement front-end and back-end\n3. Deploy applications',
      'Midterm 35%, Finals 35%, Projects 30%', 2),
 
-    ('ED201', 'Curriculum Theory',            'College of Education', 'BS Education',             '2nd Year', '1st Semester', 3,
+    ('ED201', 'Curriculum Theory', 'College of Education', 'BS Education', '2nd Year', '1st Semester', 3,
      'Theoretical foundations of curriculum development and design for educators.',
      '1. Understand curriculum models\n2. Design learning objectives\n3. Evaluate curriculum',
      'Midterm 40%, Finals 40%, Portfolio 20%', 2);
 
 
 -- Curriculum
+-- -------------------------------------------------------------
 INSERT INTO `curriculum`
     (`curriculum_name`, `course`, `department`, `effective_year`, `description`, `total_units`, `status`)
 VALUES
-    ('BS Computer Science Curriculum 2022',      'BS Computer Science',      'College of Computing', '2022', 'A comprehensive 4-year program covering computer science fundamentals, software engineering, AI, and networking.',  162, 'Active'),
-    ('BS Information Technology Curriculum 2022','BS Information Technology','College of Computing', '2022', 'A 4-year program focused on IT infrastructure, web development, database management, and systems analysis.',       154, 'Active'),
-    ('BS Education Curriculum 2022',             'BS Education',             'College of Education', '2022', 'A 4-year teacher education program with specializations in elementary and secondary education.',                  148, 'Active');
+    ('BS Computer Science Curriculum 2022', 'BS Computer Science', 'College of Computing', '2022',
+     'A comprehensive 4-year program covering computer science fundamentals, software engineering, AI, and networking.',
+     162, 'Active'),
+
+    ('BS Information Technology Curriculum 2022', 'BS Information Technology', 'College of Computing', '2022',
+     'A 4-year program focused on IT infrastructure, web development, database management, and systems analysis.',
+     154, 'Active'),
+
+    ('BS Education Curriculum 2022', 'BS Education', 'College of Education', '2022',
+     'A 4-year teacher education program with specializations in elementary and secondary education.',
+     148, 'Active');
 
 
 -- Lessons
+-- -------------------------------------------------------------
 INSERT INTO `lessons`
     (`title`, `subject_code`, `topic`, `content`, `objectives`,
      `materials`, `duration`, `lesson_type`, `week_number`, `faculty_id`)
@@ -347,9 +429,8 @@ VALUES
      '1. Write semantic HTML5\n2. Style with CSS3\n3. Create responsive layouts',
      'Laptop, Browser, Code editor', 120, 'Laboratory', 1, 2),
 
-    ("Tyler's Curriculum Model",
+    ('Tyler''s Curriculum Model',
      'ED201', 'Curriculum Rationale, Objectives',
-     'An in-depth study of Ralph Tyler\'s curriculum model and the four fundamental questions in curriculum development.',
-     '1. Explain Tyler\'s four questions\n2. Apply the model to lesson planning',
+     'An in-depth study of Ralph Tyler''s curriculum model and the four fundamental questions in curriculum development.',
+     '1. Explain Tyler''s four questions\n2. Apply the model to lesson planning',
      'Textbook, Presentation slides', 60, 'Discussion', 1, 2);
--- 
